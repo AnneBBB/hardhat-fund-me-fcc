@@ -1,0 +1,22 @@
+//similar to test
+//fund contract quickly
+
+const { getNamedAccounts, ethers } = require("hardhat")
+
+async function main() {
+    const { deployer } = await getNamedAccounts()
+    const fundMe = await ethers.getContract("FundMe", deployer)
+    console.log("Funding Contract...")
+    const transacationResponse = await fundMe.fund({
+        value: ethers.utils.parseEther("0.1"),
+    })
+    await transacationResponse.wait(1)
+    console.log("Funded!")
+}
+
+main()
+    .then(() => process.exit(0))
+    .catch((error) => {
+        console.error(error)
+        process.exit(1)
+    })
